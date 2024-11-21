@@ -1,0 +1,33 @@
+- pessoa
+nome
+dataNasc
+cpf
+ 
+- organizador 
+idOrganizador
+email
+EnviaNotificacao
+matricula
+ 
+- Participante
+idParticipante 
+codIngresso
+Telefone
+RecebeNotificacao
+ 
+- Notificação 
+idNotificacao
+TipoNotificacao
+DataNotificacoa
+ 
+ 
+- Evento 
+idEvento
+nomeEvento
+dataEvento
+descricaoEvento
+ 
+- local
+idLocal
+nomeLocal
+capacidadeLocal
