@@ -19,7 +19,7 @@ public class Local {
     }
    
     static Local buscaLocal(int idLocal) {
-        final String url = "jdbc:mysql://localhost:3306/ *nomedobanco"; // Localização do banco de dados
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
         final String user = "root";
         final String password = "";
         Local local = null;

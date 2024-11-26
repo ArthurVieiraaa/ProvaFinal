@@ -6,23 +6,22 @@ import java.sql.Statement;
  
 public class Participante {
    
-    int idParticipante;
-    String nomeParticipante;
-    String cpfParticipante;
-    String codIngresso;
-    String telefone;
- 
+    private int idParticipante;
+    private String nomeParticipante;
+    private String cpfParticipante;
+    private String codIngresso;
+    private String telefone;
+
     public Participante(int idParticipante, String nomeParticipante, String cpfParticipante, String codIngresso, String telefone) {
         this.idParticipante = idParticipante;
         this.nomeParticipante = nomeParticipante;
         this.cpfParticipante = cpfParticipante;
         this.codIngresso = codIngresso;
         this.telefone = telefone;
- 
     }
    
     static Participante buscaParticipante(int idParticipante) {
-        final String url = "jdbc:mysql://localhost:3306/ *nomedobanco"; // Localização do banco de dados
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
         final String user = "root";
         final String password = "";
         Participante participante = null;

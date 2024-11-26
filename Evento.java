@@ -19,7 +19,7 @@ public class Evento {
     }
    
     static Evento buscaEvento(int idEvento) {
-        final String url = "jdbc:mysql://localhost:3306/ *nomedobanco"; // Localização do banco de dados
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
         final String user = "root";
         final String password = "";
         Evento evento = null;

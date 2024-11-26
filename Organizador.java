@@ -14,13 +14,14 @@ public class Organizador {
  
     public Organizador(int idOrganizador, String NomeOrganizador, String cpfOrganizador, String email, String matricula) {
         this.idOrganizador = idOrganizador;
+        this.NomeOrganizador = NomeOrganizador;
+        this.cpfOrganizador = cpfOrganizador;
         this.email = email;
         this.matricula = matricula;
- 
     }
    
     static Organizador buscaOrganizador(int idOrganizador) {
-        final String url = "jdbc:mysql://localhost:3306/ *nomedobanco"; // Localização do banco de dados
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
         final String user = "root";
         final String password = "";
         Organizador organizador = null;
