@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Evento {
    
@@ -10,14 +11,20 @@ public class Evento {
     String nomeEvento;
     String dataEvento;
     String descricaoEvento;
+    int idOrganizador;
+    int idLocal;
  
-    public Evento(int idEvento, String nomeEvento, String dataEvento, String descricaoEvento) {
+    public Evento(int idEvento, String nomeEvento, String dataEvento, String descricaoEvento, int idOrganizador, int idLocal) {
         this.idEvento = idEvento;
         this.nomeEvento = nomeEvento;
         this.dataEvento = dataEvento;
         this.descricaoEvento = descricaoEvento;
+        this.idOrganizador = idOrganizador;
+        this.idLocal = idLocal;
     }
-   
+    
+    static List<Evento> evento;
+
     static Evento buscaEvento(int idEvento) {
         final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
         final String user = "root";
@@ -32,7 +39,9 @@ public class Evento {
                     rs.getInt("idEvento"),
                     rs.getString("nomeEvento"),
                     rs.getString("dataEvento"),
-                    rs.getString("descricaoEvento")
+                    rs.getString("descricaoEvento"),
+                    rs.getInt("idOrganizador"),
+                    rs.getInt("idLocal")
                 );
                 System.out.println(evento);
             } else {
@@ -51,6 +60,8 @@ public class Evento {
             + "\nNome do Local: " + this.nomeEvento
             + "\nEndereço do Local: " + this.dataEvento
             + "\nCapacidade do Local: " + this.descricaoEvento
+            + "\nID do Organizador: " +  this.idOrganizador
+            + "\nID do Local: " + this.idLocal
             + "\n===================================";
     }
 }

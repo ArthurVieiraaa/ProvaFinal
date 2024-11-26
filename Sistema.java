@@ -30,14 +30,8 @@ public class Sistema {
             System.out.println("\nDigite uma opção:");
             opcao = scanner.nextInt();
 
-            try {
-                opcao = scanner.nextInt();
-            } catch (Exception e) {
-                opcao = 0;
-            }
-
             int idOrganizador = 0, idLocal = 0, capacidadeLocal, idParticipante = 0, idEvento = 0;
-            String NomeOrganizador, cpfOrganizador, email, matricula, nomeLocal, endereco, nomeParticipante, cpfParticipante, codIngresso, telefone, nomeEvento, data, descricaoEvento;
+            String NomeOrganizador, cpfOrganizador, email, matricula, nomeLocal, endereco, nomeParticipante, cpfParticipante, codIngresso, telefone, nomeEvento, dataEvento, descricaoEvento;
 
             switch (opcao) {
                 case 1:
@@ -58,9 +52,9 @@ public class Sistema {
                         + " (NomeOrganizador, cpfOrganizador, email, matricula) VALUES "
                         + " ('" + NomeOrganizador + "', '" + cpfOrganizador + "', '" + email + "', '" + matricula + "')");
                     if(!sql) {
-                        System.out.println("Falha na execução");
-                    } else {
                         System.out.println("Organizador cadastrado com sucesso!");
+                    } else {
+                        System.out.println("Falha na execução!");
                     }
                     con.close();
                 } catch (SQLException e) {
@@ -80,12 +74,12 @@ public class Sistema {
                     Connection con = DriverManager.getConnection(url, user, password);
                     Statement stm = con.createStatement();
                     boolean sql = stm.execute("INSERT INTO local"
-                        + " (nome, endereco, capacidade) VALUES "
+                        + " (nomeLocal, endereco, capacidadeLocal) VALUES "
                         + " ('" + nomeLocal + "', '" + endereco + "', " + capacidadeLocal + ")");
                     if(!sql) {
-                        System.out.println("Falha na execução");
-                    } else {
                         System.out.println("Local cadastrado com sucesso!");
+                    } else {
+                        System.out.println("Falha na execução!");
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -109,9 +103,9 @@ public class Sistema {
                         + " (nomeParticipante, cpfParticipante, codIngresso, telefone) VALUES "
                         + " ('" + nomeParticipante + "', '" + cpfParticipante + "', " + codIngresso + ", '" + telefone + "')");
                     if(!sql) {
-                        System.out.println("Falha na execução");
-                    } else {
                         System.out.println("Participante cadastrado com sucesso!");
+                    } else {
+                        System.out.println("Falha na execução!");
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -123,7 +117,7 @@ public class Sistema {
                     System.out.println("Digite o nome do evento:");
                     nomeEvento = scanner.next();
                     System.out.println("Digite a data do evento:");
-                    data = scanner.next();
+                    dataEvento = scanner.next();
                     System.out.println("Digite a descrição do evento:");
                     descricaoEvento = scanner.next();
                     System.out.println("Digite o código do organizador:");
@@ -132,12 +126,12 @@ public class Sistema {
                     Connection con = DriverManager.getConnection(url, user, password);
                     Statement stm = con.createStatement();
                     boolean sql = stm.execute("INSERT INTO evento"
-                        + " (nome, data, descricao, idOrganizador) VALUES "
-                        + " ('" + nomeEvento + "', '" + data + "', '" + descricaoEvento + "', " + idOrganizador + ")");
+                        + " (nomeEvento, dataEvento, descricaoEvento, idOrganizador) VALUES "
+                        + " ('" + nomeEvento + "', '" + dataEvento + "', '" + descricaoEvento + "', " + idOrganizador + ")");
                     if(!sql) {
-                        System.out.println("Falha na execução");
-                    } else {
                         System.out.println("Evento cadastrado com sucesso!");
+                    } else {
+                        System.out.println("Falha na execução!");
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -147,7 +141,7 @@ public class Sistema {
                     System.out.println("\nListar Organizador:");
                     Connection con = DriverManager.getConnection(url, user, password);
                     Statement stm = con.createStatement();
-                    ResultSet sql = stm.executeQuery("SELECT * FROM orgazinador");
+                    ResultSet sql = stm.executeQuery("SELECT * FROM organizador");
                     while(sql.next()) {
                         Organizador organizador = new Organizador(
                             sql.getInt("idOrganizador"),
@@ -170,9 +164,9 @@ public class Sistema {
                     while(sql.next()) {
                         Local local = new Local(
                             sql.getInt("idLocal"),
-                            sql.getString("nome"),
+                            sql.getString("nomeLocal"),
                             sql.getString("endereco"),
-                            sql.getInt("capacidade")
+                            sql.getInt("capacidadeLocal")
                         );
                         System.out.println(local);
                     }
@@ -206,9 +200,11 @@ public class Sistema {
                     while(sql.next()) {
                         Evento evento = new Evento(
                             sql.getInt("idEvento"),
-                            sql.getString("nome"),
-                            sql.getString("data"),
-                            sql.getString("descricao")
+                            sql.getString("nomeEvento"),
+                            sql.getString("dataEvento"),
+                            sql.getString("descricaoEvento"),
+                            sql.getInt("idOrganizador"),
+                            sql.getInt("idLocal")
                         );
 
                         System.out.println(evento);
@@ -224,8 +220,6 @@ public class Sistema {
                     System.out.println("Opção inválida.");
                     break;
             }
-        
-
         } while(opcao != 9);
         scanner.close();
     }
