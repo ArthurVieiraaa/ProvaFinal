@@ -26,7 +26,8 @@ public class Sistema {
             System.out.println("[6] - Listar Local");
             System.out.println("[7] - Listar Participantes");
             System.out.println("[8] - Listar Eventos");
-            System.out.println("[9] - Encerrar Programa");
+            System.out.println("[9] - Enviar Notificação");
+            System.out.println("[10] - Encerrar Programa");
             System.out.println("\nDigite uma opção:");
             opcao = scanner.nextInt();
 
@@ -122,12 +123,14 @@ public class Sistema {
                     descricaoEvento = scanner.next();
                     System.out.println("Digite o código do organizador:");
                     idOrganizador = scanner.nextInt();
+                    System.out.println("Digite o código do local:");
+                    idLocal = scanner.nextInt();
 
                     Connection con = DriverManager.getConnection(url, user, password);
                     Statement stm = con.createStatement();
                     boolean sql = stm.execute("INSERT INTO evento"
-                        + " (nomeEvento, dataEvento, descricaoEvento, idOrganizador) VALUES "
-                        + " ('" + nomeEvento + "', '" + dataEvento + "', '" + descricaoEvento + "', " + idOrganizador + ")");
+                        + " (nomeEvento, dataEvento, descricaoEvento, idOrganizador, idLocal) VALUES "
+                        + " ('" + nomeEvento + "', '" + dataEvento + "', '" + descricaoEvento + "', " + idOrganizador + ", " + idLocal + ")");
                     if(!sql) {
                         System.out.println("Evento cadastrado com sucesso!");
                     } else {
@@ -210,9 +213,27 @@ public class Sistema {
                         System.out.println(evento);
                     }
                     con.close();
-                }
                     break;
+                }
                 case 9: {
+                    System.out.println("\n* Enviar Notificações *");
+                    String sql = "SELECT nomeParticipante FROM participante"; 
+                    Connection con = DriverManager.getConnection(url, user, password);
+                    Statement stm = con.createStatement();
+                    ResultSet rs = stm.executeQuery(sql);
+                    
+                    // Verifica se encontrou o participante
+                    if (rs.next()) { // Use 'rs' instead of 'sql'  
+                        nomeParticipante = rs.getString("nomeParticipante"); // Corrected column name to match the SQL query
+                        Notificacao.NotificacaoParticipante participante = new Notificacao.NotificacaoParticipante(nomeParticipante);
+                        participante.enviarNotificacao();
+                    } else {
+                        System.out.println("Participante não encontrado.");
+                    }
+                    con.close();
+                    break;
+                }
+                case 10: {
                     System.out.println("Programa encerrando...");
                     break;
                 }
@@ -220,7 +241,7 @@ public class Sistema {
                     System.out.println("Opção inválida.");
                     break;
             }
-        } while(opcao != 9);
+        } while(opcao != 10);
         scanner.close();
     }
 }

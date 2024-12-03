@@ -57,9 +57,9 @@ public class Evento {
  
     public String toString() {
         return  "ID: " + this.idEvento
-            + "\nNome do Local: " + this.nomeEvento
-            + "\nEndereço do Local: " + this.dataEvento
-            + "\nCapacidade do Local: " + this.descricaoEvento
+            + "\nNome do Evento: " + this.nomeEvento
+            + "\nData do Evento: " + this.dataEvento
+            + "\nDescrição do Evento: " + this.descricaoEvento
             + "\nID do Organizador: " +  this.idOrganizador
             + "\nID do Local: " + this.idLocal
             + "\n===================================";
