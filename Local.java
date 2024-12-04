@@ -53,4 +53,49 @@ public class Local {
             + "\nCapacidade do Local: " + this.capacidadeLocal
             + "\n===================================";
     }
+
+    public void atualizarLocal() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String sql = "UPDATE local SET nomeLocal = ?, endereco = ?, capacidadeLocal = ? WHERE idLocal = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, this.nomeLocal);
+            preparedStatement.setString(2, this.endereco);
+            preparedStatement.setInt(3, this.capacidadeLocal);
+            preparedStatement.executeUpdate();
+            System.out.println("Informações do local atualizadas com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar local!");
+        }
+    }
+
+    // Método para deletar o organizador do banco de dados
+    public void deletarLocal() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+    
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            System.out.println("Conexão com o banco de dados estabelecida."); // Mensagem de depuração
+            System.out.println("Tentando deletar local com ID: " + this.idLocal); // Mensagem de depuração
+    
+            String sql = "DELETE FROM local WHERE idLocal = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, this.idLocal);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Local deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum local encontrado com o ID fornecido.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar local!");
+        }
+    }
+
 }
