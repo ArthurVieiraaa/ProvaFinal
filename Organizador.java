@@ -6,11 +6,11 @@ import java.sql.Statement;
  
 public class Organizador {
    
-    int idOrganizador;
-    String NomeOrganizador;
-    String cpfOrganizador;
-    String email;
-    String matricula;
+    private int idOrganizador;
+    private String NomeOrganizador;
+    private String cpfOrganizador;
+    private String email;
+    private String matricula;
  
     public Organizador(int idOrganizador, String NomeOrganizador, String cpfOrganizador, String email, String matricula) {
         this.idOrganizador = idOrganizador;
@@ -56,5 +56,13 @@ public class Organizador {
             + "\nEmail: " + this.email
             + "\nMatricula: " + this.matricula
             + "\n===================================";
+    }
+
+    public int getIdOrganizador() {
+        return idOrganizador;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

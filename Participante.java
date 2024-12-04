@@ -57,4 +57,12 @@ public class Participante {
             + "\nTelefone: " + this.telefone
             + "\n===================================";
     }
+
+    public int getIdParticipante() {
+        return idParticipante;
+    }
+
+    public String getNomeParticipante() {
+        return nomeParticipante;
+    }
 }

@@ -15,6 +15,7 @@ public class Sistema {
         System.out.println(" SISTEMA DE EVENTOS \n");
 
         int opcao = 0;
+        int opt = 0;
 
         do{
             System.out.println("\nMenu:");
@@ -216,21 +217,19 @@ public class Sistema {
                     break;
                 }
                 case 9: {
+
                     System.out.println("\n* Enviar Notificações *");
-                    String sql = "SELECT nomeParticipante FROM participante"; 
-                    Connection con = DriverManager.getConnection(url, user, password);
-                    Statement stm = con.createStatement();
-                    ResultSet rs = stm.executeQuery(sql);
+                    System.out.println("Escolha para quem mandar a notificação:");
+                    System.out.println("[1] - Organizador");
+                    System.out.println("[2] - Participante");
+                    opt = scanner.nextInt();
+
+                    Notificacao notificacao = opt == 1 
+                        ? new NotificacaoEmail()
+                        : new NotificacaoSMS();
+
+                    notificacao.enviarNotificacao();
                     
-                    // Verifica se encontrou o participante
-                    if (rs.next()) { // Use 'rs' instead of 'sql'  
-                        nomeParticipante = rs.getString("nomeParticipante"); // Corrected column name to match the SQL query
-                        Notificacao.NotificacaoParticipante participante = new Notificacao.NotificacaoParticipante(nomeParticipante);
-                        participante.enviarNotificacao();
-                    } else {
-                        System.out.println("Participante não encontrado.");
-                    }
-                    con.close();
                     break;
                 }
                 case 10: {
