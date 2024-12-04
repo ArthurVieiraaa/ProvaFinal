@@ -6,11 +6,11 @@ import java.sql.Statement;
  
 public class Participante {
    
-    private int idParticipante;
-    private String nomeParticipante;
-    private String cpfParticipante;
-    private String codIngresso;
-    private String telefone;
+    int idParticipante;
+    String nomeParticipante;
+    String cpfParticipante;
+    String codIngresso;
+    String telefone;
 
     public Participante(int idParticipante, String nomeParticipante, String cpfParticipante, String codIngresso, String telefone) {
         this.idParticipante = idParticipante;
@@ -65,4 +65,50 @@ public class Participante {
     public String getNomeParticipante() {
         return nomeParticipante;
     }
+
+    public void atualizarParticipante() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String sql = "UPDATE participante SET nomeParticipante = ?, cpfParticipante = ?, codIngresso = ?, telefone = ? WHERE idParticipante = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, this.nomeParticipante);
+            preparedStatement.setString(2, this.cpfParticipante);
+            preparedStatement.setString(3, this.codIngresso);
+            preparedStatement.setString(4, this.telefone);
+            preparedStatement.executeUpdate();
+            System.out.println("Informações do participante atualizadas com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar participante!");
+        }
+    }
+
+    // Método para deletar o organizador do banco de dados
+    public void deletarOrganizador() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+    
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            System.out.println("Conexão com o banco de dados estabelecida."); // Mensagem de depuração
+            System.out.println("Tentando deletar participante com ID: " + this.idParticipante); // Mensagem de depuração
+    
+            String sql = "DELETE FROM participante WHERE idParticipante = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, this.idParticipante);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Participante deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum participante encontrado com o ID fornecido.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar participante!");
+        }
+    }
+
 }

@@ -64,4 +64,51 @@ public class Evento {
             + "\nID do Local: " + this.idLocal
             + "\n===================================";
     }
+
+    public void atualizarEvento() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String sql = "UPDATE evento SET nomeEvento = ?, dataEvento = ?, descricaoEvento = ?, idOrganizdor = ?, idLocal = ? WHERE idEvento = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, this.nomeEvento);
+            preparedStatement.setString(2, this.dataEvento);
+            preparedStatement.setString(3, this.descricaoEvento);
+            preparedStatement.setInt(4, this.idOrganizador);
+            preparedStatement.setInt(4, this.idLocal);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Informações do evento atualizadas com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar evento!");
+        }
+    }
+
+    public void deletarEvento() {
+        final String url = "jdbc:mysql://localhost:3306/provafinaljava_db"; // Localização do banco de dados
+        final String user = "root";
+        final String password = "";
+    
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            System.out.println("Conexão com o banco de dados estabelecida."); // Mensagem de depuração
+            System.out.println("Tentando deletar evento com ID: " + this.idEvento); // Mensagem de depuração
+    
+            String sql = "DELETE FROM participante WHERE idParticipante = ?";
+            var preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, this.idEvento);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Evento deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum evento encontrado com o ID fornecido.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar Evento!");
+        }
+    }
+
 }
